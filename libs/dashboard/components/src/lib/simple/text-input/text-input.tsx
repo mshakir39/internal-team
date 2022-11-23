@@ -15,13 +15,15 @@ export interface StandardTextInputProps {
   helperText?: string;
   placeholder?: string;
   variant?: string;
+  min?:string;
+  max?:string;
   size?: "medium" | "small" | undefined;
   startAdornment?: React.ReactNode;
 }
 
 export const TextInput: React.FC<StandardTextInputProps> = (props) => {
   // Separating props for a mix of usages, with defaults for sx.
-  const { startAdornment, helperText, dataTestId, sx, ...rest } = props;
+  const { startAdornment, helperText, dataTestId,min,max ,sx, ...rest } = props;
   const localSx = { ...{ width: "100%", height: "54px" }, ...sx };
 
   return (
@@ -29,6 +31,7 @@ export const TextInput: React.FC<StandardTextInputProps> = (props) => {
       helperText={helperText}
       InputProps={{
         startAdornment,
+        inputProps: { min: min, max: max } 
       }}
       data-testid={dataTestId}
       {...rest}

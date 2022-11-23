@@ -5,6 +5,10 @@ import { OverridableStringUnion } from "@mui/types";
 interface ButtonProps {
   text?: string;
   type?: "submit" | "reset" | "button";
+  fullWidth?:boolean;
+  name?: string;
+
+  style?:object;
   color_?: OverridableStringUnion<
     | "inherit"
     | "primary"
@@ -21,6 +25,8 @@ function AcceptButton({
   type = "submit",
   text = "Default",
   color_ = "primary",
+  fullWidth=true,
+  style,
   onClick,
 }: ButtonProps) {
   return (
@@ -28,8 +34,9 @@ function AcceptButton({
       onClick={onClick}
       type={type}
       data-testid="accept-btn"
-      fullWidth={true}
+      fullWidth={fullWidth}
       color={color_}
+      style={style}
       variant={"contained"}
     >
       {text}
