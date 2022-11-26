@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { AddTeamMember } from "./addTeamMember";
+import { AddTeamMember } from "./internalTeam";
 
 export default {
   component: AddTeamMember,

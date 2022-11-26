@@ -16,6 +16,7 @@ export interface StandardAutocompleteProps {
   name?: string;
   helperText?: string;
   loading?: boolean;
+  isOptionEqualToValue?:any;
   onChange?: <T>(
     event: React.SyntheticEvent,
     value: T | Array<T>,
@@ -26,7 +27,7 @@ export interface StandardAutocompleteProps {
 
 export function SelectInput(props: StandardAutocompleteProps) {
   // Splitting props into ones for Autocomplete and TextField.
-  const { error, dataTestId, helperText, loading, ...outer } = props;
+  const { error, dataTestId, helperText, loading,isOptionEqualToValue, ...outer } = props;
 
   // Splitting TextField props into sx, with defaults, and all others.
   let { sx: textFieldSx } = outer;
@@ -37,6 +38,7 @@ export function SelectInput(props: StandardAutocompleteProps) {
     <Autocomplete
       {...outer}
       loading={loading ? loading : undefined}
+      isOptionEqualToValue={isOptionEqualToValue}
       noOptionsText={
         <Typography
           sx={(theme) => ({

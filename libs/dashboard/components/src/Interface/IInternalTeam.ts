@@ -1,4 +1,5 @@
 export interface IinternalTeam{
+    id:string;
     employeeName: string,
     role: string,
     email:string,

@@ -70,7 +70,7 @@ export const TeamMemberForm = ({
 
   return (
     <form
-      data-testid="test-id"
+      data-testid="form-testId"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -94,7 +94,8 @@ export const TeamMemberForm = ({
       />
       <SelectInput
         dataTestId="role-testId"
-        // required
+        isOptionEqualToValue={(option:any, value:any) => option.value ===value&&value}
+        required
         name="role"
         label="Role"
         options={["Project Manager", "Caterer", "Box filler", "Cook"]}

@@ -34,6 +34,7 @@ export const TextInput: React.FC<StandardTextInputProps> = (props) => {
         inputProps: { min: min, max: max } 
       }}
       data-testid={dataTestId}
+      data-cy="text-input"
       {...rest}
       variant="standard"
       sx={(theme) => ({

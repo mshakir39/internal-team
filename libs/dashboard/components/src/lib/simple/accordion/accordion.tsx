@@ -18,11 +18,11 @@ export interface IAccordion extends PropsWithChildren {
 }
 
 export const AccordionComponent: React.FC<IAccordion> = (props) => {
-  const { label, children, dataTestId, typographyStyle, Icon } = props;
+  const { label, children, dataTestId, typographyStyle, Icon=null } = props;
 
   return (
     <div>
-      <Accordion defaultExpanded>
+      <Accordion defaultExpanded data-testid="accordion-testId">
         <AccordionSummary
           expandIcon={<MdKeyboardArrowDown />}
           aria-controls="panel1a-content"
