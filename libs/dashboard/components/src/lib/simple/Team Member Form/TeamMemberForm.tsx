@@ -1,15 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import MuiPhoneNumber from "material-ui-phone-number-2";
-import TextInput from "../simple/text-input/text-input";
-import SelectInput from "../simple/select-input/select-input";
-import AcceptButton from "../simple/accept-button/accept-button";
+import TextInput from "../text-input/text-input";
+import SelectInput from "../select-input/select-input";
+import AcceptButton from "../accept-button/accept-button";
 import CustomRequired from "../CustomRequired/CustomRequired";
+import { IinternalTeam } from "../../../Interface/IInternalTeam";
+import PhoneInput from "../Phone-input/phone-input";
 /* eslint-disable-next-line */
 export interface TeamMemberFormProps {
   title?: string;
   type: string;
   getDataFormChild?: any;
-  data:any;
+  data?: IinternalTeam;
 }
 
 export const TeamMemberForm = ({
@@ -18,7 +20,8 @@ export const TeamMemberForm = ({
   getDataFormChild,
   data,
 }: TeamMemberFormProps) => {
-  const [inputData, setInputData] = useState({
+  const [inputData, setInputData] = useState<IinternalTeam>({
+    id: "",
     employeeName: "",
     role: "",
     email: "",
@@ -30,9 +33,9 @@ export const TeamMemberForm = ({
     costRate: "",
   });
 
-  useEffect(()=>{
-    setInputData(data)
-  },[data])
+  useEffect(() => {
+    if (data) setInputData(data);
+  }, [data]);
 
   const handleChange = (
     newValue: string | ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -53,11 +56,7 @@ export const TeamMemberForm = ({
     }));
   };
 
-  useEffect(() => {
-    console.log("inputData", inputData);
-  }, [inputData]);
-
-  const onSelect = (e: any, value: string) => {
+  const onSelect = (e: React.MouseEvent<HTMLSelectElement>, value: string) => {
     setInputData((prev: any) => ({
       ...prev,
       role: value,
@@ -65,7 +64,7 @@ export const TeamMemberForm = ({
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getDataFormChild(inputData);
+    if (getDataFormChild) getDataFormChild(inputData);
   };
 
   return (
@@ -89,17 +88,19 @@ export const TeamMemberForm = ({
         name="employeeName"
         type="text"
         label="Employee Name"
-        value={inputData&&inputData.employeeName}
+        value={inputData && inputData.employeeName}
         onChange={onChange}
       />
       <SelectInput
         dataTestId="role-testId"
-        isOptionEqualToValue={(option:any, value:any) => option.value ===value&&value}
+        isOptionEqualToValue={(option: any, value: any) =>
+          option.value === value && value
+        }
         required
         name="role"
         label="Role"
         options={["Project Manager", "Caterer", "Box filler", "Cook"]}
-        value={inputData&&inputData.role}
+        value={inputData && inputData.role}
         onChange={(e: any, v: any) => onSelect(e, v)}
       />
       <TextInput
@@ -108,27 +109,25 @@ export const TeamMemberForm = ({
         name="email"
         type="email"
         label="Email"
-        value={inputData&&inputData.email}
+        value={inputData && inputData.email}
         onChange={onChange}
       />
       <CustomRequired
-        requiredCondition={inputData&&inputData.phoneNumber!==""}
-        value={inputData&&inputData.phoneNumber}
+        requiredCondition={inputData && inputData.phoneNumber.length <17}
+        value={
+          inputData && inputData.phoneNumber.length <17
+            ? ""
+            : inputData && inputData.phoneNumber
+        }
       >
-        <MuiPhoneNumber
+        <PhoneInput
           onChange={handleChange}
-          value={inputData&&inputData.phoneNumber}
+          value={inputData && inputData.phoneNumber}
           data-testid="phoneNumber-testId"
           required
-          autoFormat={true}
           name="phoneNumber"
-          fullWidth
           style={{ marginTop: "16px" }}
-          defaultCountry="us"
           label="Phone number"
-          margin="dense"
-          size="small"
-          variant="standard"
         />
       </CustomRequired>
       <TextInput
@@ -139,7 +138,7 @@ export const TeamMemberForm = ({
         label="Weekly Target Billing Hours"
         min="0"
         max="168"
-        value={inputData&&inputData.weeklyTargetBillingHours}
+        value={inputData && inputData.weeklyTargetBillingHours}
         onChange={onChange}
       />
 
@@ -151,7 +150,7 @@ export const TeamMemberForm = ({
         label="Vacation Day Allowance"
         min="0"
         max="8760"
-        value={inputData&&inputData.vacationDayAllowance}
+        value={inputData && inputData.vacationDayAllowance}
         onChange={onChange}
       />
       <TextInput
@@ -162,7 +161,7 @@ export const TeamMemberForm = ({
         label="Sick Day Allowance"
         min="0"
         max="8760"
-        value={inputData&&inputData.sickDayAllowance}
+        value={inputData && inputData.sickDayAllowance}
         onChange={onChange}
       />
       <TextInput
@@ -173,7 +172,7 @@ export const TeamMemberForm = ({
         label="Billng Rate"
         min="0"
         max="1000000"
-        value={inputData&&inputData.billingRate}
+        value={inputData && inputData.billingRate}
         onChange={onChange}
       />
       <TextInput
@@ -184,7 +183,7 @@ export const TeamMemberForm = ({
         dataTestId="costRate-testId"
         min="0"
         max="1000000"
-        value={inputData&&inputData.costRate}
+        value={inputData && inputData.costRate}
         onChange={onChange}
       />
 

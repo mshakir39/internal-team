@@ -1,19 +1,21 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import {  render } from "@testing-library/react";
 
-import AddTeamMember from "./internalTeam";
+import InternalTeam from "./internalTeam";
 
-describe("AcceptButton", () => {
+describe("Internal Team", () => {
   it("should render successfully", () => {
-    const { baseElement } = render(<AddTeamMember />);
+    const { baseElement } = render(<InternalTeam />);
     expect(baseElement).toBeTruthy();
   });
-  it("shows all required input fields with empty values", () => {
-    const { getByTestId } = render(
-      <AddTeamMember
-   
-      />
-    );
+  it("render all Children Properly", () => {
+    const { getByTestId, baseElement } = render(<InternalTeam />);
+    const accordion = getByTestId("accordion-testId");
+    const accordionIcon = baseElement.querySelector("svg");
+    const accordionChildren = getByTestId("accordion-children");
+    const fabButton = getByTestId("fab-button-testId");
+    expect(accordion).toBeTruthy();
+    expect(accordionChildren).toBeTruthy();
+    expect(accordionIcon?.childElementCount).toBe(2);
+    expect(fabButton).toBeTruthy();
   });
- 
-
 });

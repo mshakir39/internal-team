@@ -2,7 +2,7 @@ import * as React from "react";
 import { PropsWithChildren } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { TeamMemberForm } from "../../Team Member Form/TeamMemberForm";
+import { TeamMemberForm } from "../Team Member Form/TeamMemberForm";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect } from "react";
 import { IinternalTeam } from "../../../Interface/IInternalTeam";

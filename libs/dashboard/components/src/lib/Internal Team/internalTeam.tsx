@@ -10,12 +10,11 @@ import Dialog from "../simple/Dialog/dialog";
 import AccordionComponent from "../simple/accordion/accordion";
 import { MdGroups } from "react-icons/md";
 import { IinternalTeam } from "../../Interface/IInternalTeam";
-import AcceptButton from "../simple/accept-button/accept-button";
 import { v4 as uuidv4 } from "uuid";
 /* eslint-disable-next-line */
 export interface addTeamMemberProps {}
 
-const dummyData: any = [
+const dummyData: Array<IinternalTeam> = [
   // {
   //   id: "0",
   //   employeeName: "Muzamil",
@@ -43,7 +42,7 @@ const dummyData: any = [
 ];
 
 const internalTeamObj = {
-  id: "0",
+  id: "",
   employeeName: "",
   role: "",
   email: "",
@@ -55,17 +54,20 @@ const internalTeamObj = {
   costRate: "",
 };
 
-export const AddTeamMember: React.FC<addTeamMemberProps> = () => {
+export const AddTeamMember: React.FC<addTeamMemberProps> = (
+  props: addTeamMemberProps
+) => {
   const [tableData, setTableData] = useState<Array<IinternalTeam>>(dummyData);
   const [editData, setEditData] = useState<IinternalTeam>();
-  const [rowIndex, setRowIndex] = useState<any>("");
+  const [rowIndex, setRowIndex] = useState<string>("");
   const [dialogType, setDialogType] = useState<
     "Add" | "Update" | "Delete" | undefined
   >(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [tableRowIndex, setTableRowIndex] = React.useState<any>();
-  const [selectedRowObj, setSelectedRowObj] = React.useState<any>();
+  const [tableRowIndex, setTableRowIndex] = React.useState<string>("");
+  const [selectedRowObj, setSelectedRowObj] =
+    React.useState<IinternalTeam>(internalTeamObj);
 
   const open = Boolean(anchorEl);
   const handleClick = (event: any) => {
@@ -111,11 +113,10 @@ export const AddTeamMember: React.FC<addTeamMemberProps> = () => {
     setOpenModal(false);
   };
 
-  const onEditRowCallback = (index: number, obj: any) => {
+  const onEditRowCallback = (index: string, obj: IinternalTeam) => {
     setEditData(obj);
     setDialogType("Update");
     setRowIndex(index);
-    console.log("data", obj);
     setOpenModal(true);
   };
 
@@ -192,8 +193,7 @@ export const AddTeamMember: React.FC<addTeamMemberProps> = () => {
             data-testid="menu-testId"
             onClick={(e) => {
               handleClick(e);
-              console.log("clicked id", row.id, row);
-              setTableRowIndex(Number(row.id));
+              setTableRowIndex(row.row.id);
               setSelectedRowObj(row.row);
             }}
           />
@@ -210,7 +210,7 @@ export const AddTeamMember: React.FC<addTeamMemberProps> = () => {
               data-testid="menuEdit-testId"
               onClick={() => {
                 onEditRowCallback &&
-                  onEditRowCallback(Number(tableRowIndex), selectedRowObj);
+                  onEditRowCallback(tableRowIndex, selectedRowObj);
 
                 handleClose();
               }}
@@ -258,6 +258,7 @@ export const AddTeamMember: React.FC<addTeamMemberProps> = () => {
         color="warning"
         aria-label="add"
         data-cy="fab-button-cyId"
+        data-testid="fab-button-testId"
         style={{ position: "absolute", top: "80%", left: "46%" }}
         onClick={() => {
           setOpenModal(true);
